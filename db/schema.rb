@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_04_191327) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_04_192220) do
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
     t.datetime "created_at", null: false
@@ -39,6 +39,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_191327) do
     t.index ["city_id"], name: "index_doctors_on_city_id"
   end
 
+  create_table "join_table_doctor_specialties", force: :cascade do |t|
+    t.integer "doctor_id", null: false
+    t.integer "specialty_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_join_table_doctor_specialties_on_doctor_id"
+    t.index ["specialty_id"], name: "index_join_table_doctor_specialties_on_specialty_id"
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -58,5 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_191327) do
   add_foreign_key "appointments", "doctors"
   add_foreign_key "appointments", "patients"
   add_foreign_key "doctors", "cities"
+  add_foreign_key "join_table_doctor_specialties", "doctors"
+  add_foreign_key "join_table_doctor_specialties", "specialties"
   add_foreign_key "patients", "cities"
 end
